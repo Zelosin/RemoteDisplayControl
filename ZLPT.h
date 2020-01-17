@@ -1,5 +1,4 @@
 #pragma once
-#include <Windows.h>
 
 #define ZL_LMOUSEBTDOWN 0x0201
 #define ZL_LMOUSEBTUP   0x0202
@@ -10,6 +9,13 @@
 
 typedef enum { ZKEYBOARD_EVENT, ZMOUSE_EVENT } EVENT_TYPE;
 typedef enum { ZTO_SERVER, ZTO_CLIENT } DIRECTION;
+
+struct ZLS_IMAGE{
+	int stride;
+	int width;
+	int height;
+	BYTE data[960000]; 
+};
 
 struct ZKBDLLHOOKSTRUCT {
 	DWORD     vkCode;
@@ -30,7 +36,8 @@ struct ZLSPR {
 	EVENT_TYPE mEventType;
 	DIRECTION mDirection;
 	ZLSPR_CONTROL ptData;
-	BITMAP mScreenShot;
+	ZLS_IMAGE mScreenShot;
 };
 
 const int PROTOCOL_SIZE = sizeof(ZLSPR);
+const int PROTOCOL_SIZE_WITHOUT_IMAGE = sizeof(EVENT_TYPE) + sizeof(DIRECTION) + sizeof(ZLSPR_CONTROL);
